@@ -1,7 +1,7 @@
 <?php
 include("conectar.php");
 
-// Traer todos los productos
+
 $sql = "SELECT * FROM productos ORDER BY id DESC";
 $result = pg_query($conn, $sql);
 ?>
@@ -26,7 +26,7 @@ $result = pg_query($conn, $sql);
 </head>
 <body>
 
-  <!-- Navbar -->
+ 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="index.php">🖥️ Tecnobog</a>
@@ -62,7 +62,7 @@ $result = pg_query($conn, $sql);
     </div>
   </div>
 
-  <!-- Modal Agregar Producto -->
+ 
   <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -101,7 +101,7 @@ $result = pg_query($conn, $sql);
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // 🟢 Agregar producto
+    
     document.getElementById("formAgregar").addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -115,13 +115,13 @@ $result = pg_query($conn, $sql);
       let result = await response.json();
       if (result.success) {
         alert("Producto agregado con éxito ✅");
-        location.reload(); // recargar productos
+        location.reload(); 
       } else {
         alert("Error: " + result.error);
       }
     });
 
-    // 🟠 Editar producto
+   
     async function editarProducto(id) {
       let nuevoNombre = prompt("Nuevo nombre del producto:");
       let nuevaDescripcion = prompt("Nueva descripción:");
@@ -149,7 +149,7 @@ $result = pg_query($conn, $sql);
       }
     }
 
-    // 🔴 Eliminar producto
+    
     async function eliminarProducto(id) {
       if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
 
