@@ -16,7 +16,7 @@ $conn = pg_connect($conn_string);
 if (!$conn) {
     die("❌ Error al conectar con la base de datos: " . pg_last_error());
 } else {
-    // Si quieres verificar conexión, descomenta la siguiente línea
-    // echo "✅ Conexión exitosa a la base de datos en Render";
+    // Forzar esquema "public"
+    pg_query($conn, "SET search_path TO public;");
 }
 ?>
