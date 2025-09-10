@@ -1,22 +1,18 @@
-# Imagen base con PHP + Apache
+# Imagen base con PHP y Apache
 FROM php:8.2-apache
 
-# Instalar extensiones de PostgreSQL
+# Instalar extensiones necesarias de PostgreSQL
 RUN apt-get update && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copiar solo el contenido de la carpeta "pruebas_php" al docroot de Apache
+# Copiar solo los archivos de pruebas_php/ a la raíz de Apache
 COPY pruebas_php/ /var/www/html/
 
-# Configurar Apache para que use index.php como entrada
-RUN echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/php.conf \
-    && echo '    AllowOverride All' >> /etc/apache2/conf-available/php.conf \
-    && echo '    Require all granted' >> /etc/apache2/conf-available/php.conf \
-    && echo '</Directory>' >> /etc/apache2/conf-available/php.conf \
-    && echo 'DirectoryIndex index.php index.html' >> /etc/apache2/conf-available/php.conf \
-    && a2enconf php
+# Asegurar que index.php sea el archivo de inicio
+RUN echo 'DirectoryIndex index.php index.html' > /etc/apache2/conf-available/docker.conf \
+    && a2enconf docker
 
-# Exponer puerto que Render espera
+# Exponer el puerto que Render espera
 EXPOSE 10000
 
 # Iniciar Apache
