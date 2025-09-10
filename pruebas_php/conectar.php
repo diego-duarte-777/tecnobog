@@ -1,13 +1,29 @@
 <?php
-$host = "localhost";
-$port = "5432";  
-$dbname = "tienda_computadoras"; 
-$user = "postgres"; 
-$password = "xtoby122x"; 
+$databaseUrl = getenv("DATABASE_URL");
 
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+if ($databaseUrl) {
+    // Parsear la URL de Render
+    $db = parse_url($databaseUrl);
+
+    $host = $db["host"];
+    $port = $db["port"] ?? 5432;
+    $user = $db["user"];
+    $password = $db["pass"];
+    $dbname = ltrim($db["path"], "/");
+
+    $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+} else {
+    // Config local
+    $host = "localhost";
+    $port = "5432";
+    $user = "postgres";
+    $password = "1234";
+    $dbname = "tienda_computadoras";
+
+    $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+}
 
 if (!$conn) {
-    die("Conexión fallida: " . pg_last_error());
+    die("❌ Error de conexión: " . pg_last_error());
 }
 ?>
