@@ -9,11 +9,11 @@ RUN apt-get update && apt-get install -y libpq-dev \
 COPY . /var/www/html/
 
 # Configurar Apache para que use index.php como entrada
-RUN echo "<Directory /var/www/html/> \
-    AllowOverride All \
-    Require all granted \
-</Directory>" > /etc/apache2/conf-available/php.conf \
-    && echo "DirectoryIndex index.php index.html" >> /etc/apache2/conf-available/php.conf \
+RUN echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/php.conf \
+    && echo '    AllowOverride All' >> /etc/apache2/conf-available/php.conf \
+    && echo '    Require all granted' >> /etc/apache2/conf-available/php.conf \
+    && echo '</Directory>' >> /etc/apache2/conf-available/php.conf \
+    && echo 'DirectoryIndex index.php index.html' >> /etc/apache2/conf-available/php.conf \
     && a2enconf php
 
 # Exponer puerto que Render espera
