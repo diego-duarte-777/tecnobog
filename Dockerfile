@@ -5,8 +5,8 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copiar el código del proyecto
-COPY . /var/www/html/
+# Copiar solo el contenido de la carpeta "pruebas_php" al docroot de Apache
+COPY pruebas_php/ /var/www/html/
 
 # Configurar Apache para que use index.php como entrada
 RUN echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/php.conf \
