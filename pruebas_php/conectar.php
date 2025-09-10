@@ -1,24 +1,22 @@
 <?php
-$databaseUrl = getenv("DATABASE_URL");
+// Datos de conexión a PostgreSQL en Render
+$host = "dpg-d30nui8gjchc73f36ul0-a.virginia-postgres.render.com";
+$port = "5432";
+$dbname = "prueva";
+$user = "prueva_user";
+$password = "CLQQwOGZ4HpzqnKgHO8il7YSQyCezf01";
 
-if ($databaseUrl) {
-    // Aseguramos que comience con postgres://
-    $databaseUrl = str_replace("postgresql://", "postgres://", $databaseUrl);
+// Cadena de conexión
+$conn_string = "host=$host port=$port dbname=$dbname user=$user password=$password sslmode=require";
 
-    $db = parse_url($databaseUrl);
+// Intentar la conexión
+$conn = pg_connect($conn_string);
 
-    $host = $db["host"];
-    $port = $db["port"] ?? "5432";
-    $user = $db["user"];
-    $password = $db["pass"];
-    $dbname = ltrim($db["path"], "/");
-
-    $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-    if (!$conn) {
-        die("❌ Error conectando a Render DB: " . pg_last_error());
-    }
+// Verificar si la conexión fue exitosa
+if (!$conn) {
+    die("❌ Error al conectar con la base de datos: " . pg_last_error());
 } else {
-    die("❌ No se encontró DATABASE_URL en Render. ¿La configuraste en Settings → Environment Variables?");
+    // Si quieres verificar conexión, descomenta la siguiente línea
+    // echo "✅ Conexión exitosa a la base de datos en Render";
 }
 ?>
